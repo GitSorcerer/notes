@@ -1,0 +1,61 @@
+1.elasticsearch  
+./elasticsearch -d
+
+
+2.redis
+cd /usr/local/redis-5.0.5/bin
+redis-server ../etc/redis.conf 
+netstat -tunpl |grep 6379
+
+3.rabbitmq
+cd /usr/lib/rabbitmq/bin
+./rabbitmq-server   -detached 
+ps -ef | grep rabbitmq
+
+
+4.minio
+chmod +x minio （赋予可执行权限）
+nohup /resources/minio/minio server --address :9999  /resources/minio/data > /resources/minio/data/minio.log 2>&1 &
+
+5.nacos
+./startup.sh -m standalone  或  sh startup.sh -m standalone
+
+
+关闭防火墙
+systemctl stop firewalld.service
+
+
+nohup java -jar -Xms256m -Xmx256m blog-eureka-1.0-SNAPSHOT.jar --spring.profiles.active=pro >catalina-blog-eureka.out 2>&1 &
+http://localhost:8002/hystrix
+
+nohup java -jar -Xms256m -Xmx256m blog-manage-1.0-SNAPSHOT.jar --spring.profiles.active=pro >catalina-blog-manage.out 2>&1 &
+http://localhost:8000/blog/
+
+nohup java -jar -Xms256m -Xmx256m blog-portal-1.0-SNAPSHOT.jar --spring.profiles.active=pro >catalina-blog-portal.out 2>&1 &
+http://localhost:8001/blog/
+
+
+jar启动如果出现未读取到配置文件信息异常
+添加
+-Dfile.encoding=utf-8
+
+docker 启动minio
+
+docker run -p 9000:9000 --name minio \
+    -d --restart=always \
+    -e "MINIO_ACCESS_KEY=gaoh" \
+    -e "MINIO_SECRET_KEY=gh922104" \
+    -v /resources/docker/minio/data:/data \
+    -v /resources/docker/minio/.minio:/.minio \
+    minio/minio server /data
+
+使用中
+docker run -p 9000:9000 \
+  --name minio \
+  -d \
+  -v /resources/docker/minio/data:/data \
+  -e "MINIO_ACCESS_KEY=gaoh" \
+  -e "MINIO_SECRET_KEY=gh922104" \
+  minio/minio server /data
+
+
