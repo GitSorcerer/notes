@@ -59,3 +59,10 @@ docker run -p 9000:9000 \
   minio/minio server /data
 
 
+nohup java -jar -Xms256m -Xmx256m official-website-system-2.2.1.jar  --spring.profiles.active=pro >catalina-official-website-system.out 2>&1 &
+
+nohup /resource/minio/minio server --address :8086  /resource/minio/data > /resource/minio/data/minio.log 2>&1 &
+
+虚拟机开机自启
+
+"D:\Program Files\Vmvare\vmware.exe"  -x   "D:\Program Files\OS\CentOS-Linux-Copy-One\CentOS7-Copy-One.vmx"
